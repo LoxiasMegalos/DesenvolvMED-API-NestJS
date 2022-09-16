@@ -1,7 +1,9 @@
 import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { Paciente } from "../entities/paciente.entity";
 import { PacienteService } from "../services/paciente.service";
 
+@ApiTags('Pacientes')
 @Controller('/paciente')
 export class PacienteController {
 

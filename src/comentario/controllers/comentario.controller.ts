@@ -1,10 +1,12 @@
 
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { DeleteResult } from "typeorm";
 import { Comentario } from "../entities/comentario.entity";
 import { ComentarioDTO } from "../models/comentarioDTO";
 import { ComentarioService } from "../services/comentario.service";
 
+@ApiTags('Comentarios')
 @Controller('/comentario')
 export class ComentarioController {
 

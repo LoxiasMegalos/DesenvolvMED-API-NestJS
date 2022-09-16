@@ -3,7 +3,9 @@ import { Comentario } from "../../comentario/entities/comentario.entity";
 import { DeleteResult } from "typeorm";
 import { Postagem } from "../entities/postagem.entity";
 import { PostagemService } from "../services/postagem.service";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Postagens')
 @Controller('/postagem')
 export class PostagemController {
 

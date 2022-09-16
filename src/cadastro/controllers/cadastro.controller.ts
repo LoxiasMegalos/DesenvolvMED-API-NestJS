@@ -4,34 +4,47 @@ import { DeleteResult } from "typeorm";
 import { Cadastro } from "../entities/cadastro.entity";
 import { Paciente } from "../../paciente/entities/paciente.entity";
 import { Medico } from "../../medico/entities/medico.entity";
-import { CadastroTemporarioDTO } from "../model/cadastrotemporariodto";
 import { Comentario } from "src/comentario/entities/comentario.entity";
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";
+import { CadastroTemporarioPacienteDTO } from "../model/cadastrotemporariopacientedto";
+import { CadastroTemporarioMedicoDTO } from "../model/cadastrotemporariomedicodto";
 
+@ApiTags('Cadastros')
 @Controller('/cadastro')
 export class CadastroController {
 
     constructor(
         private readonly service: CadastroService
     ) { }
+    
 
+    @ApiCreatedResponse({ description: 'Created Succesfully' })
+    @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
     @Post('/medico')
     @HttpCode(HttpStatus.CREATED)
-    createMedico(@Body() cadastroTemporarioDTO: CadastroTemporarioDTO): Promise<Medico> {
-        return this.service.createMedico(cadastroTemporarioDTO)
+    createMedico(@Body() cadastroTemporarioMedicoDTO: CadastroTemporarioMedicoDTO): Promise<Medico> {
+        return this.service.createMedico(cadastroTemporarioMedicoDTO)
     }
 
+    @ApiCreatedResponse({ description: 'Created Succesfully' })
+    @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
     @Post('/paciente')
     @HttpCode(HttpStatus.CREATED)
-    createPaciente(@Body() cadastroTemporarioDTO: CadastroTemporarioDTO): Promise<Paciente> {
-        return this.service.createPaciente(cadastroTemporarioDTO)
+    createPaciente(@Body() cadastroTemporarioPacienteDTO: CadastroTemporarioPacienteDTO): Promise<Paciente> {
+        return this.service.createPaciente(cadastroTemporarioPacienteDTO)
     }
 
+    @ApiOkResponse({ description: 'The resource was returned successfully' })
+    @ApiNoContentResponse({ description: 'Content not found' })
     @Delete('/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
         return this.service.delete(id)
     }
 
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll(): Promise<Cadastro[]> {
@@ -44,15 +57,23 @@ export class CadastroController {
         return this.service.findComentariosByCadastroId(id)
     }
 
+    @ApiOkResponse({ description: 'The resource was updated successfully' })
+    @ApiNotFoundResponse({ description: 'Resource not found' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
     @Put('/medico')
     @HttpCode(HttpStatus.OK)
-    updateMedico(@Body() cadastroTemporarioDTO: CadastroTemporarioDTO): Promise<Medico> {
-        return this.service.updateMedico(cadastroTemporarioDTO)
+    updateMedico(@Body() cadastroTemporarioMedicoDTO: CadastroTemporarioMedicoDTO): Promise<Medico> {
+        return this.service.updateMedico(cadastroTemporarioMedicoDTO)
     }
 
+    @ApiOkResponse({ description: 'The resource was updated successfully' })
+    @ApiNotFoundResponse({ description: 'Resource not found' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
     @Put('/paciente')
     @HttpCode(HttpStatus.OK)
-    updatePaciente(@Body() cadastroTemporarioDTO: CadastroTemporarioDTO): Promise<Paciente> {
-        return this.service.updatePaciente(cadastroTemporarioDTO)
+    updatePaciente(@Body() cadastroTemporarioPacienteDTO: CadastroTemporarioPacienteDTO): Promise<Paciente> {
+        return this.service.updatePaciente(cadastroTemporarioPacienteDTO)
     }
 }

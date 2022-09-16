@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
 import { Cadastro } from './cadastro/entities/cadastro.entity';
 import { CadastroModule } from './cadastro/modules/cadastro.module';
 import { Comentario } from './comentario/entities/comentario.entity';
@@ -24,7 +25,19 @@ import { TemaModule } from './tema/modules/tema.module';
       database: 'db_desenvolvmed_a',
       entities: [Postagem, Tema, Cadastro, Medico, Paciente, Comentario],
       synchronize: true
-    }),
+    })
+    /*
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      logging: false,
+      dropSchema: false,
+      ssl: {rejectUnauthorized: false},
+      synchronize: true,
+      autoLoadEntities: true
+    })
+    */
+    ,
     PostagemModule,
     CadastroModule,
     MedicoModule,
@@ -32,7 +45,7 @@ import { TemaModule } from './tema/modules/tema.module';
     PacienteModule,
     ComentarioModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule { }
