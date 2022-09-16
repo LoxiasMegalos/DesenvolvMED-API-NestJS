@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { CadastroService } from "../services/cadastro.service";
 import { DeleteResult } from "typeorm";
 import { Cadastro } from "../entities/cadastro.entity";
-import { Paciente } from "../../paciente/entities/paciente.entity";
+import { Paciente } from "../../Paciente/entities/paciente.entity";
 import { Medico } from "../../medico/entities/medico.entity";
 import { Comentario } from "../../comentario/entities/comentario.entity";
 import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";

@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CadastroTemporarioPacienteDTO } from "../model/cadastrotemporariopacientedto";
 import { Medico } from "../../medico/entities/medico.entity";
-import { Paciente } from "../../paciente/entities/paciente.entity";
+import { Paciente } from "../../Paciente/entities/paciente.entity";
 import { Cadastro } from "../entities/cadastro.entity";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Comentario } from "src/comentario/entities/comentario.entity";
