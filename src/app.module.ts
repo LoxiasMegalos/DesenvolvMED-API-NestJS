@@ -16,7 +16,7 @@ import { TemaModule } from './tema/modules/tema.module';
 
 @Module({
   imports: [
-    /*
+    
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -27,7 +27,7 @@ import { TemaModule } from './tema/modules/tema.module';
       entities: [Postagem, Tema, Cadastro, Medico, Paciente, Comentario],
       synchronize: true
     })
-    */
+    /*
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
@@ -36,7 +36,7 @@ import { TemaModule } from './tema/modules/tema.module';
       ssl: {rejectUnauthorized: false},
       synchronize: true,
       autoLoadEntities: true
-    }),
+    })*/,
     PostagemModule,
     CadastroModule,
     MedicoModule,

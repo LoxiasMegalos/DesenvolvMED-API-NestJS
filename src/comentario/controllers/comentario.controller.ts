@@ -33,7 +33,7 @@ export class ComentarioController {
     create(@Body() comentario: Comentario): Promise<Comentario> {
         return this.service.create(comentario)
     }
-
+    
     @Put()
     @HttpCode(HttpStatus.OK)
     update(@Body() comentario: Comentario): Promise<Comentario> {

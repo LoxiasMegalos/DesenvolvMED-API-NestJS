@@ -7,11 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-	.setTitle('DesenvolvMED')
-	.setDescription('API rede social - DesenvolvMED')
-	.setContact('Grupo 01 - Generation Mobile 04', 'https://loxiasmegalos.github.io/Apresentacao/', 'murillo.alkantara@gmail.com')
-	.setVersion('1.0')
-	.build()
+    .setTitle('DesenvolvMED')
+    .setDescription('API rede social - DesenvolvMED')
+    .setContact('Grupo 01 - Generation Mobile 04', 'https://loxiasmegalos.github.io/Apresentacao/', 'murillo.alkantara@gmail.com')
+    .setVersion('1.0')
+    .build()
 
   const document = SwaggerModule.createDocument(app, config)
 
@@ -23,6 +23,6 @@ async function bootstrap() {
 
   app.enableCors()
 
-  await app.listen(process.env.PORT ||3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
