@@ -4,7 +4,7 @@ import { DeleteResult } from "typeorm";
 import { Cadastro } from "../entities/cadastro.entity";
 import { Paciente } from "../../paciente/entities/paciente.entity";
 import { Medico } from "../../medico/entities/medico.entity";
-import { Comentario } from "src/comentario/entities/comentario.entity";
+import { Comentario } from "../../comentario/entities/comentario.entity";
 import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";
 import { CadastroTemporarioPacienteDTO } from "../model/cadastrotemporariopacientedto";
 import { CadastroTemporarioMedicoDTO } from "../model/cadastrotemporariomedicodto";
