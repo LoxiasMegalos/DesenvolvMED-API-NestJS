@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Medico } from "../entities/medico.entity";
 import { MedicoService } from "../services/medico.service";
 
@@ -9,13 +9,14 @@ export class MedicoController {
     constructor(
         private readonly service: MedicoService
     ) { }
-
+    
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll(): Promise<Medico[]> {
         return this.service.findAll()
     }
-
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findById(@Param('id', ParseIntPipe) id: number): Promise<Medico> {

@@ -3,7 +3,7 @@ import { Comentario } from "../../comentario/entities/comentario.entity";
 import { DeleteResult } from "typeorm";
 import { Postagem } from "../entities/postagem.entity";
 import { PostagemService } from "../services/postagem.service";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('Postagens')
 @Controller('/postagem')
@@ -12,25 +12,29 @@ export class PostagemController {
     constructor(
         private readonly service: PostagemService
     ) { }
-
+    
+    @ApiOkResponse({ description: 'The resources were returned successfully'})
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll(): Promise<Postagem[]> {
         return this.service.findAll()
     }
 
+    @ApiOkResponse({ description: 'The resources were returned successfully'})
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findById(@Param('id', ParseIntPipe) id: number): Promise<Postagem> {
         return this.service.findById(id)
     }
 
+    @ApiOkResponse({ description: 'The resources were returned successfully'})
     @Get('/comentarios/:id')
     @HttpCode(HttpStatus.OK)
     findComentariosByPostagemId(@Param('id', ParseIntPipe) id: number): Promise<Comentario[]> {
         return this.service.findComentariosByPostagemId(id)
     }
 
+    @ApiOkResponse({ description: 'The resources were returned successfully'})
     @Get('/busca/:titulo')
     @HttpCode(HttpStatus.OK)
     findByTitle(@Param('titulo') titulo: string): Promise<Postagem[]> {
