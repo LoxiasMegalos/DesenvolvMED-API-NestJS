@@ -5,7 +5,7 @@ import { Cadastro } from "../entities/cadastro.entity";
 import { Paciente } from "../../paciente/entities/paciente.entity";
 import { Medico } from "../../medico/entities/medico.entity";
 import { Comentario } from "src/comentario/entities/comentario.entity";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";
 import { CadastroTemporarioPacienteDTO } from "../model/cadastrotemporariopacientedto";
 import { CadastroTemporarioMedicoDTO } from "../model/cadastrotemporariomedicodto";
 
@@ -17,7 +17,11 @@ export class CadastroController {
         private readonly service: CadastroService
     ) { }
     
-
+    @ApiBody({
+        required: true,
+        description: 'Deve conter todos os dados requisitados no CadastroTemporarioMedicoDTO',
+        type: CadastroTemporarioMedicoDTO
+    })
     @ApiCreatedResponse({ description: 'Created Succesfully' })
     @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
@@ -51,6 +55,13 @@ export class CadastroController {
         return this.service.findAll()
     }
 
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Deve conter um id de um usuário cadastrado no sistema',
+        type: Number
+    })
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
     @Get('/comentarios/:id')
     @HttpCode(HttpStatus.OK)
     findComentariosByCadastroId(@Param('id', ParseIntPipe) id: number): Promise<Comentario[]> {

@@ -13,7 +13,9 @@ export class Cadastro {
     @IsNotEmpty()
     @Length(11)
     @Column({ nullable: false, unique: true, length: 11 })
-    @ApiProperty()
+    @ApiProperty({
+        description: "Um cpf válido com 11 dígitos, apenas números!"
+    })
     cpf: string
 
     @IsNotEmpty()
