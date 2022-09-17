@@ -17,7 +17,9 @@ export class Comentario {
     @MaxLength(300)
     @MinLength(10)
     @Column({ nullable: false, length: 300 })
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Precisa de conter entre 10 e 300 caracteres.'
+    })
     conteudo: string
 
     @IsNotEmpty()

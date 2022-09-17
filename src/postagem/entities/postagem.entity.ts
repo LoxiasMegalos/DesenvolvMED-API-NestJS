@@ -12,25 +12,31 @@ export class Postagem {
     @ApiProperty()
     id: number
 
+    @ApiProperty({
+        description: 'Pode conter no máximo 255 caracteres'
+    })
     @IsNotEmpty()
     @MaxLength(255)
     @MinLength(20)
     @Column({ nullable: false, length: 255 })
-    @ApiProperty()
     titulo: string
 
+    @ApiProperty({
+        description: 'Pode conter entre 20 e 5000 caracteres'
+    })
     @IsNotEmpty()
     @MaxLength(5000)
     @MinLength(20)
     @Column({ nullable: false, length: 5000 })
-    @ApiProperty()
     descricao: string
 
+    @ApiProperty({
+        description: 'Pode conter entre 10 e 500 caracteres'
+    })
     @IsNotEmpty()
     @MaxLength(500)
     @MinLength(10)
     @Column({ nullable: false, length: 500 })
-    @ApiProperty()
     anexo: string
 
     @IsNotEmpty()

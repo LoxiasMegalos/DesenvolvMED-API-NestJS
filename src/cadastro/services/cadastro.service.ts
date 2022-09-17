@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CadastroTemporarioPacienteDTO } from "../model/cadastrotemporariopacientedto";
 import { Medico } from "../../medico/entities/medico.entity";
-import { Paciente } from "../../Paciente/entities/paciente.entity";
+import { Paciente } from "../../paciente/entities/paciente.entity";
 import { Cadastro } from "../entities/cadastro.entity";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Comentario } from "src/comentario/entities/comentario.entity";
@@ -29,7 +29,15 @@ export class CadastroService {
         if (!cadastroTemporarioMedicoDTO.crm || !matches(cadastroTemporarioMedicoDTO.cpf, /^[0-9]+$/)) {
             throw new HttpException('Dados inválidos!', HttpStatus.BAD_REQUEST)
         } else if (!cadastroTemporarioMedicoDTO.email || !cadastroTemporarioMedicoDTO.email.includes("@")) {
-            throw new HttpException('E-mail já cadastrado ou inválido!', HttpStatus.UNPROCESSABLE_ENTITY)
+            throw new HttpException('E-mail inválido!', HttpStatus.UNPROCESSABLE_ENTITY)
+        }
+
+        let emailDisponivel = await this.findCadastroByEmail(cadastroTemporarioMedicoDTO.email)
+        let cpfDisponivel = await this.findCadastroByCpf(cadastroTemporarioMedicoDTO.cpf)
+        let crmDisponivel = await this.findMedicoByCrm(cadastroTemporarioMedicoDTO.crm)
+
+        if(emailDisponivel || cpfDisponivel || crmDisponivel){
+            throw new HttpException('Dados cadastrais já encontrados no sistema!', HttpStatus.BAD_REQUEST)
         }
 
         let cadastro: Cadastro = new Cadastro()
@@ -50,12 +58,35 @@ export class CadastroService {
         return this.medicoRepository.save(medico)
     }
 
+    findCadastroByCpf(cpf: string): Promise<Cadastro> {
+        return this.cadastroRepository.findOne({
+            where:{
+                cpf
+            }
+        })
+    }
+
+    findCadastroByEmail(email: string): Promise<Cadastro> {
+        return this.cadastroRepository.findOne({
+            where:{
+                email
+            }
+        })
+    }
+
     async createPaciente(cadastroTemporarioPacienteDTO: CadastroTemporarioPacienteDTO): Promise<Paciente> {
 
         if (!matches(cadastroTemporarioPacienteDTO.cpf, /^[0-9]+$/)) {
             throw new HttpException('CPF inválido!', HttpStatus.BAD_REQUEST)
         } else if (!cadastroTemporarioPacienteDTO.email || !cadastroTemporarioPacienteDTO.email.includes("@")) {
             throw new HttpException('E-mail já cadastrado!', HttpStatus.UNPROCESSABLE_ENTITY)
+        }
+
+        let emailDisponivel = await this.findCadastroByEmail(cadastroTemporarioPacienteDTO.email)
+        let cpfDisponivel = await this.findCadastroByCpf(cadastroTemporarioPacienteDTO.cpf)
+
+        if(emailDisponivel || cpfDisponivel){
+            throw new HttpException('Dados cadastrais já encontrados no sistema!', HttpStatus.BAD_REQUEST)
         }
 
         let cadastro: Cadastro = new Cadastro()
@@ -156,7 +187,7 @@ export class CadastroService {
         } else if (!matches(cadastroTemporarioMedicoDTO.cpf, /^[0-9]+$/)) {
             throw new HttpException('CPF inválido!', HttpStatus.BAD_REQUEST)
         } else if (!cadastroTemporarioMedicoDTO.email || !cadastroTemporarioMedicoDTO.email.includes("@")) {
-            throw new HttpException('E-mail já cadastrado!', HttpStatus.UNPROCESSABLE_ENTITY)
+            throw new HttpException('E-mail inválido!', HttpStatus.UNPROCESSABLE_ENTITY)
         }
 
         let cadastro: Cadastro = new Cadastro()

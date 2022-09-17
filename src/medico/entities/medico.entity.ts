@@ -11,10 +11,12 @@ export class Medico {
     @ApiProperty()
     id: number
 
+    @ApiProperty({
+        description: 'Precisa de conter exatamente 13 caracteres'
+    })
     @IsNotEmpty()
     @Length(13)
     @Column({ nullable: false, unique: true, length: 13 })
-    @ApiProperty()
     crm: string
 
     @OneToMany(() => Postagem, (postagem) => postagem.medico)

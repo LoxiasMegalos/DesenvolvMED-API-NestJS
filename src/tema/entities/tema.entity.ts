@@ -11,10 +11,12 @@ export class Tema {
     @ApiProperty()
     id: number
 
+    @ApiProperty({
+        description: 'Pode conter no máximo 255 caracteres.'
+    })
     @IsNotEmpty()
     @MaxLength(255)
     @Column({ nullable: false, length: 255 })
-    @ApiProperty()
     tema: string
 
     @OneToMany(() => Postagem, (postagem) => postagem.tema)

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { CadastroService } from "../services/cadastro.service";
 import { DeleteResult } from "typeorm";
 import { Cadastro } from "../entities/cadastro.entity";
-import { Paciente } from "../../Paciente/entities/paciente.entity";
+import { Paciente } from "../../paciente/entities/paciente.entity";
 import { Medico } from "../../medico/entities/medico.entity";
 import { Comentario } from "../../comentario/entities/comentario.entity";
 import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiResponse, ApiTags, ApiUnprocessableEntityResponse } from "@nestjs/swagger";
@@ -31,6 +31,11 @@ export class CadastroController {
         return this.service.createMedico(cadastroTemporarioMedicoDTO)
     }
 
+    @ApiBody({
+        required: true,
+        description: 'Deve conter todos os dados requisitados no CadastroTemporarioPacienteDTO',
+        type: CadastroTemporarioPacienteDTO
+    })
     @ApiCreatedResponse({ description: 'Created Succesfully' })
     @ApiUnprocessableEntityResponse({ description: 'Unprocessable Entity' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
@@ -40,7 +45,13 @@ export class CadastroController {
         return this.service.createPaciente(cadastroTemporarioPacienteDTO)
     }
 
-    @ApiOkResponse({ description: 'The resource was returned successfully' })
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Tem de ser o ID de um cadastro existente no banco de dados!',
+        type: Number
+    })
+    @ApiNotFoundResponse({ description: 'Recurso não encontrado!' })
     @ApiNoContentResponse({ description: 'Content not found' })
     @Delete('/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
@@ -58,7 +69,7 @@ export class CadastroController {
     @ApiParam({
         name: 'id',
         required: true,
-        description: 'Deve conter um id de um usuário cadastrado no sistema',
+        description: 'Tem de ser o ID de um cadastro existente no banco de dados!',
         type: Number
     })
     @ApiOkResponse({ description: 'The resources were returned successfully' })
@@ -68,6 +79,11 @@ export class CadastroController {
         return this.service.findComentariosByCadastroId(id)
     }
 
+    @ApiBody({
+        required: true,
+        description: 'Deve conter todos os dados requisitados no CadastroTemporarioMedicoDTO e não é possível alterar o CRM',
+        type: CadastroTemporarioMedicoDTO
+    })
     @ApiOkResponse({ description: 'The resource was updated successfully' })
     @ApiNotFoundResponse({ description: 'Resource not found' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
@@ -78,6 +94,11 @@ export class CadastroController {
         return this.service.updateMedico(cadastroTemporarioMedicoDTO)
     }
 
+    @ApiBody({
+        required: true,
+        description: 'Deve conter todos os dados requisitados no CadastroTemporarioPacienteDTO',
+        type: CadastroTemporarioPacienteDTO
+    })
     @ApiOkResponse({ description: 'The resource was updated successfully' })
     @ApiNotFoundResponse({ description: 'Resource not found' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
