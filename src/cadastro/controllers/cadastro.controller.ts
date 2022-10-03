@@ -57,6 +57,19 @@ export class CadastroController {
     @HttpCode(HttpStatus.NO_CONTENT)
     delete(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
         return this.service.delete(id)
+    }  
+
+    @ApiParam({
+        name: 'email',
+        required: true,
+        description: 'Tem de ser o email de um cadastro existente no banco de dados!',
+        type: String
+    })
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
+    @Get('/busca-email/:email')
+    @HttpCode(HttpStatus.OK)
+    findByEmail(@Param('email') email: string): Promise<Cadastro> {
+        return this.service.findByEmail(email)
     }
 
     @ApiOkResponse({ description: 'The resources were returned successfully' })

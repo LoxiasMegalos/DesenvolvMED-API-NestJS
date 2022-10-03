@@ -35,4 +35,24 @@ export class PacienteService {
 
         return pacienteSearch
     }
+
+    async findPacienteByEmail(emailProcurado: string): Promise<Paciente> {
+
+        let pacienteSearch = await this.pacienteRepository.findOne({
+            relations: {
+                cadastro: true
+            }, where :{
+                cadastro : {
+                    email : emailProcurado
+                }
+            }
+        })
+
+        if (!pacienteSearch) {
+            throw new HttpException('Paciente não encontrado!', HttpStatus.NOT_FOUND)
+        }
+
+        return pacienteSearch
+    }
+
 }

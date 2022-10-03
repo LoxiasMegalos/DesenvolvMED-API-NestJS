@@ -269,4 +269,22 @@ export class CadastroService {
         return cadastro.comentarios
         
     }
+
+    async findByEmail(email: string): Promise<Cadastro> {
+
+        let cadastro = await this.cadastroRepository.findOne({
+            where: {
+                email
+            }, relations: {
+                comentarios: true,
+            }
+        })
+
+        if (!cadastro)
+            throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND)
+
+        return cadastro
+    }
+
+    
 }

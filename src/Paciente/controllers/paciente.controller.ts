@@ -31,4 +31,19 @@ export class PacienteController {
     findById(@Param('id', ParseIntPipe) id: number): Promise<Paciente> {
         return this.service.findById(id)
     }
+
+    @ApiOkResponse({ description: 'Os recursos foram retornados com sucesso!' })
+    @ApiNotFoundResponse({ description: 'Recurso não encontrado!' })
+    @ApiParam({
+        name: 'email',
+        required: true,
+        description: 'Tem de ser o email de um cadastro existente no banco de dados!',
+        type: String
+      })
+    @Get('/busca-email/:email')
+    @HttpCode(HttpStatus.OK)
+    findPacienteByEmail(@Param('email') email: string): Promise<Paciente> {
+        return this.service.findPacienteByEmail(email)
+    }
+
 }

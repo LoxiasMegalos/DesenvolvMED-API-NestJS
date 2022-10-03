@@ -38,4 +38,24 @@ export class MedicoService {
         return medicoSearch
     }
 
+    async findMedicoByEmail(email: string): Promise<Medico> {
+
+        let medicoSearch = await this.medicoRepository.findOne({
+            where: {
+                cadastro :{
+                    email
+                }
+            }, relations: {
+                cadastro: true,
+                postagens: true,
+            }
+        })
+
+        if (!medicoSearch) {
+            throw new HttpException('Médico não encontrado no sistema!', HttpStatus.NOT_FOUND)
+        }
+
+        return medicoSearch
+    }
+
 }
