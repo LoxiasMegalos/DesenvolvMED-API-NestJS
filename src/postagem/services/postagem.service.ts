@@ -22,6 +22,8 @@ export class PostagemService {
                 medico: {
                     cadastro : true
                 }
+            } , order :{
+                id : "DESC"
             }
         })
     }
@@ -37,6 +39,8 @@ export class PostagemService {
                 medico: {
                     cadastro : true
                 }
+            }, order :{
+                id : "DESC"
             }
         })
 
