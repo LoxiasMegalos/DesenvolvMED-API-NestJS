@@ -16,14 +16,15 @@ export class PostagemService {
     async findAll(): Promise<Postagem[]> {
 
         return this.postagemRepository.find({
+            order :{
+                id : "DESC"
+            },
             relations: {
                 tema: true,
                 comentarios: true,
                 medico: {
                     cadastro : true
                 }
-            } , order :{
-                id : "DESC"
             }
         })
     }
@@ -33,14 +34,14 @@ export class PostagemService {
         let postagem = await this.postagemRepository.findOne({
             where: {
                 id
+            }, order :{
+                id : "DESC"
             }, relations: {
                 tema: true,
                 comentarios: true,
                 medico: {
                     cadastro : true
                 }
-            }, order :{
-                id : "DESC"
             }
         })
 
