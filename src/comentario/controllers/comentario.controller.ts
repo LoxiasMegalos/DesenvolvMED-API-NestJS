@@ -76,4 +76,17 @@ export class ComentarioController {
         return this.service.delete(id)
     }
 
+    @ApiOkResponse({ description: 'The resources were returned successfully' })
+    @Get('/postagem/:id')
+    @ApiNotFoundResponse({ description: 'Recurso não encontrado!' })
+    @ApiParam({
+        name: 'id',
+        required: true,
+        description: 'Tem de ser o ID de uma postagem existente no banco de dados!',
+        type: Number
+    })
+    @HttpCode(HttpStatus.OK)
+    findComentariosByPostagem(@Param('id', ParseIntPipe) id: number): Promise<Comentario[]> {
+        return this.service.findComentariosByPostagem(id)
+    }
 }

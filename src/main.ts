@@ -10,7 +10,7 @@ async function bootstrap() {
     .setTitle('DesenvolvMED')
     .setDescription('API rede social - DesenvolvMED')
     .setContact('Grupo 01 - Generation Mobile 04', 'https://loxiasmegalos.github.io/Apresentacao/', 'murillo.alkantara@gmail.com')
-    .setVersion('1.2')
+    .setVersion('1.3')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)

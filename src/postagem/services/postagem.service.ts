@@ -52,7 +52,7 @@ export class PostagemService {
     }
 
     async findComentariosByPostagemId(id: number): Promise<Comentario[]> {
-
+        
         let postagem = await this.postagemRepository.findOne({
             where: {
                 id

@@ -75,4 +75,19 @@ export class ComentarioService {
         return this.comentarioRepository.save(comentario)
     }
 
+    async findComentariosByPostagem(id: number): Promise<Comentario[]> {
+
+        return this.comentarioRepository.find({
+            relations: {
+                cadastro: true,
+                postagem: true
+            },
+            where: {
+                postagem: {
+                    id
+                }
+            }
+        })
+    }
+
 }
